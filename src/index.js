@@ -1,15 +1,19 @@
+"use strict"
+
 module.exports = function check(str, bracketsConfig) {
     let stack = [];
 
-    this.checkThere = function (str) {
-        for (let i = 0; i < bracketsConfig.length; i++) {
+    function checkThere (str) {
+        let i;
+        for (i = 0; i < bracketsConfig.length; i++) {
             if (str == bracketsConfig[i][0] || str == bracketsConfig[i][1]) return true
         }
         return false
     };
 
-    this.checkEqual = function (str) {
-        for (let i = 0; i < bracketsConfig.length; i++) {
+    function checkEqual (str) {
+        let i;
+        for (i = 0; i < bracketsConfig.length; i++) {
             if (str == bracketsConfig[i][0] && bracketsConfig[i][0] == bracketsConfig[i][1]) {
                 return true
             }
@@ -17,7 +21,7 @@ module.exports = function check(str, bracketsConfig) {
         return false
     };
 
-    this.equalDelAdd = function (str){
+    function equalDelAdd(str){
         if (stack[stack.length - 1] == str) {
             stack.pop();
         }else {
@@ -25,15 +29,17 @@ module.exports = function check(str, bracketsConfig) {
         }
     };
 
-    this.checkLeft = function (str) {
-        for (let i = 0; i < bracketsConfig.length; i++) {
+    function checkLeft (str) {
+        let i;
+        for (i = 0; i < bracketsConfig.length; i++) {
             if (str == bracketsConfig[i][0]) return true
         }
         return false
     };
 
-    this.checkRight = function (str) {
-        for (let i = 0; i < bracketsConfig.length; i++) {
+    function checkRight (str) {
+        let i;
+        for (i = 0; i < bracketsConfig.length; i++) {
             if (str == bracketsConfig[i][1] && stack[stack.length-1] == bracketsConfig[i][0]) {
 
                 return true
@@ -42,17 +48,18 @@ module.exports = function check(str, bracketsConfig) {
         return false
     };
 
-    for (let i = 0; i < str.length; i++) {
+    let i;
+    for (i = 0; i < str.length; i++) {
         let k = str.charAt(i);
-        if (!this.checkThere(k)) {
+        if (!checkThere(k)) {
             return false
-        } else if (this.checkEqual(k)) {
-            this.equalDelAdd(k);
+        } else if (checkEqual(k)) {
+            equalDelAdd(k);
             continue
-        } else if (this.checkLeft(k)) {
+        } else if (checkLeft(k)) {
             stack.push(k);
             continue
-        } else if (this.checkRight(k)) {
+        } else if (checkRight(k)) {
             stack.pop();
             continue
         };
@@ -60,7 +67,3 @@ module.exports = function check(str, bracketsConfig) {
     }
     return stack.length == 0
 };
-
-
-
-
